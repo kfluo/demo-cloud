@@ -1,8 +1,126 @@
+server:
+  servlet:
+    context-path: ~
+  tomcat:
+    uri-encoding: UTF-8
 
-# 数据库连接
-jdbc: 
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例状态监控参数
+    statusPageUrlPath: ${server.servlet.context-path}
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+
+
+# 启用负载均衡
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 0
   
-  # JTA 分布式事务
-  jta:
+# 声明式服务
+feign:
+
+  # 开启okhttp客户端
+  okhttp:
+    enabled: true
+  httpclient:
     enabled: false
     
+  # 启用容错保护、断路器
+  hystrix:
+    enabled: true
+    
+  # 请求和响应GZIP压缩支持
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+# 客户端调用熔断降级的线程超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+# 微服务列表
+service:
+  core:
+    name: luokf-cloud-module-core
+    path: ${server.servlet.context-path}
+  test1:
+    name: luokf-cloud-module-test1
+    path: ${server.servlet.context-path}
+  test2:
+    name: luokf-cloud-module-test2
+    path: ${server.servlet.context-path}
+
+# 数据库连接
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/jeesite?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+    
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # Consul 服务发现
+  cloud:
+    consul:
+      discovery:
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+        healthCheckInterval: 15s
+  
+  # Redis 连接参数 （RedisProperties）
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    ssl: false
+    database: 0
+    password: 123456
+    timeout: 2000
+    lettuce:
+      pool:
+        # 最大空闲连接数
+        maxIdle: 3
+        # 最大活动连接数
+        maxActive: 20
+  
+  # 消息队列服务
+#  rabbitmq:
+#    host: 192.168.11.103
+#    port: 8976
+#    username: admin
+#    password: admin123

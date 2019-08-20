@@ -1,18 +1,10 @@
-
-#======================================#
-#========== Server settings ===========#
-#======================================#
-
 server:
   port: 8970
   servlet:
     context-path: ~
   tomcat:
     uri-encoding: UTF-8
-    
-#======================================#
-#========== Cloud settings ===========#
-#======================================#
+
 
 # 服务注册
 eureka:
@@ -41,12 +33,7 @@ eureka:
     # 注册中心地址（集群时指定另外一个注册中心地址）
     serviceUrl.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
-#======================================#
-#========== Spring settings ===========#
-#======================================#
-
 spring:
-  
   # 应用程序名称
   application:
     name: luokf-cloud-eureka
@@ -62,7 +49,4 @@ logging:
   custom:
     filepath: /usr/local/logs/${spring.application.name}
   config: classpath:logback-spring.xml
-  
-#======================================#
-#========== Project settings ==========#
-#======================================#
+

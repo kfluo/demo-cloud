@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author: luokf
  */
 @RestController
-public class TestDataFacade implements TestDataServiceClient,TestDataServiceApi {
+public class TestDataApi implements TestDataServiceClient{
 
     @Autowired
     private TestDataDAO testDataDAO;
 
     @Override
-    public TestData get(String id) {
+    public TestData getById(String id) {
         return testDataDAO.getById(id);
     }
 }

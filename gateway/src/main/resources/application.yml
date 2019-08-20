@@ -1,8 +1,3 @@
-
-#======================================#
-#========== Server settings ===========#
-#======================================#
-
 server:
 
   port: 8980
@@ -10,10 +5,6 @@ server:
     context-path: ~
   tomcat:
     uri-encoding: UTF-8
-    
-#======================================#
-#========== Cloud settings ============#
-#======================================#
 
 # 服务注册
 eureka:
@@ -32,10 +23,6 @@ eureka:
   client:
     # 注册中心地址（集群时指定另外一个注册中心地址）
     serviceUrl.defaultZone: http://127.0.0.1:8970/eureka/
-
-#======================================#
-#========== Spring settings ===========#
-#======================================#
 
 spring:
   cloud:
@@ -63,22 +50,20 @@ spring:
             - Path=/demo/**
           filters:
             - StripPrefix=1
-#        # 测试模块2
-#        - id: test2
-#          uri: lb://luokf-cloud-module-test2
-#          predicates:
-#            - Path=/js/test2/**
-#        # 基础权限模块
-#        - id: core
-#          uri: lb://luokf-cloud-module-core
-#          predicates:
-#            - Path=/js/**
+        # 测试模块2
+        - id: luokf-cloud-module-test2
+          uri: lb://luokf-cloud-module-test2
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+
   
   # 应用程序名称
   application:
     name: luokf-cloud-gateway
 
-  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  # 当前环境名称
   profiles:
     active: default
   
@@ -90,7 +75,4 @@ spring:
 logging:
   root: /usr/local/logs/${spring.application.name}
   config: classpath:logback-spring.xml
-  
-#======================================#
-#========== Project settings ==========#
-#======================================#
+

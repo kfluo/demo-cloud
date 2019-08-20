@@ -13,11 +13,11 @@
     <artifactId>test2</artifactId>
 
     <dependencies>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--<scope>provided</scope>-->
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- 服务发现 -->
@@ -56,6 +56,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.luokf</groupId>
+            <artifactId>test1-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
 
